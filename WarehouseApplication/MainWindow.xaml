@@ -5,8 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarehouseApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" 
+        Height="600" Width="900"
+        MinHeight="350" MinWidth="650">
+
+    <Window.Resources>
+        <Style x:Key="BaseStyle">
+            <Setter Property="ItemsControl.FontSize" Value="16"/>
+        </Style>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseStyle}"/>
+        <Style TargetType="TextBox" BasedOn="{StaticResource BaseStyle}"/>
+        <Style TargetType="Button" BasedOn="{StaticResource BaseStyle}"/>
+        <Style TargetType="DataGrid" BasedOn="{StaticResource BaseStyle}"/>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition  Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <!-- Приём -->
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                Text="Поле ввода данных для приёма"/>
+        <TextBox Grid.Row="1" VerticalAlignment="Top" Name="InputIdTextBox" Margin="5" Height="30" MaxWidth="500"
+                VerticalContentAlignment="Center"/>
+        <TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="ПРИЁМ"/>
+        <DataGrid Grid.Row="3" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" IsReadOnly="True" Width="2*"/>
+                <DataGridTextColumn Header="Количество" IsReadOnly="True" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Row="4" Margin="10" Content="Очистить"/>
+
+        <!-- Выдача -->
+        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                Text="Поле ввода данных для отгрузки"/>
+        <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Name="OutputIdTextBox" Margin="5" Height="30" MaxWidth="500"
+                VerticalContentAlignment="Center"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="ОТГРУЗКА"/>
+        <DataGrid Grid.Column="1" Grid.Row="3" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Наименование" IsReadOnly="True" Width="2*"/>
+                <DataGridTextColumn Header="Количество" IsReadOnly="True" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
