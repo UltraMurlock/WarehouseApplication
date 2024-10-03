@@ -7,6 +7,8 @@
 
 
 
+        public ProductTemplate() { }
+
         public ProductTemplate(string id, string name)
         {
             Id = id;

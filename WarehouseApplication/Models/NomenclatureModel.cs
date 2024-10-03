@@ -1,16 +1,19 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Data.Entity;
 
 namespace WarehouseApplication.Models
 {
     internal class NomenclatureModel
     {
-        public ObservableCollection<ProductTemplate> ProductTemplates;
+        public DbSet<ProductTemplate> ProductTemplates => _nomenclatureDB.Templates;
+
+        private NomenclatureDB _nomenclatureDB;
 
 
 
         public NomenclatureModel()
         {
-            ProductTemplates = new ObservableCollection<ProductTemplate>();
+            _nomenclatureDB = NomenclatureDB.GetInstance();
+            _nomenclatureDB.Templates.Load();
         }
 
 
@@ -18,11 +21,13 @@ namespace WarehouseApplication.Models
         public void AddProductTemplate(ProductTemplate template)
         {
             ProductTemplates.Add(template);
+            _nomenclatureDB.SaveChanges();
         }
 
         public void RemoveProductTemplate(ProductTemplate template)
         {
             ProductTemplates.Remove(template);
+            _nomenclatureDB.SaveChanges();
         }
     }
 }

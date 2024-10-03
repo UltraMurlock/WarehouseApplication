@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Data.Entity;
 using Prism.Commands;
 using Prism.Mvvm;
 using WarehouseApplication.Models;
@@ -9,7 +10,7 @@ namespace WarehouseApplication.ViewModels
     {
         public DelegateCommand<ProductTemplate> AddProductTemplateCommand { get; }
 
-        public ObservableCollection<ProductTemplate> ProductTemplates => _model.ProductTemplates;
+        public DbSet<ProductTemplate> ProductTemplates => _model.ProductTemplates;
 
         private NomenclatureModel _model;
 
