@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WarehouseApplication"
         xmlns:vm="clr-namespace:WarehouseApplication.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="Логистика склада" 
         Height="600" Width="900"
         MinHeight="350" MinWidth="650">
 
@@ -20,26 +20,34 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="30"/>
             <RowDefinition  Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
+        
+        <!-- Меню -->
+        <Menu Grid.ColumnSpan="2">
+            <MenuItem Header="Инструменты" FontSize="14">
+                <MenuItem Header="Редактор номенкулатуры" FontSize="14" Command="{Binding OpenNomenclatureEditorCommand}"/>
+            </MenuItem>
+        </Menu>
 
         <!-- Приём -->
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                    Text="Поле для ввода данных для приёма"/>
-        <TextBox Name="InputIdTextBox" Grid.Row="1" VerticalAlignment="Top" Margin="5" Height="30" MaxWidth="500"
+        <TextBox Name="InputIdTextBox" Grid.Row="2" VerticalAlignment="Top" Margin="5" Height="30" MaxWidth="500"
                  VerticalContentAlignment="Center">
             <TextBox.InputBindings>
                 <KeyBinding Key="Enter" Command="{Binding AddInputCommand}" 
                             CommandParameter="{Binding ElementName=InputIdTextBox, Path=Text}"/>
             </TextBox.InputBindings>
         </TextBox>
-            <TextBlock Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+            <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                        Text="ПРИЁМ"/>
-        <DataGrid ItemsSource="{Binding InputProducts}" Grid.Row="3" Margin="10" AutoGenerateColumns="False">
+        <DataGrid ItemsSource="{Binding InputProducts}" Grid.Row="4" Margin="10" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" IsReadOnly="True" Width="2*"/>
                 <DataGridTextColumn Header="Количество" Binding="{Binding Count}" IsReadOnly="True" Width="*"/>
@@ -47,25 +55,26 @@
         </DataGrid>
 
         <!-- Отгрузка -->
-        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+        <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                    Text="Поле ввода данных для отгрузки"/>
-        <TextBox Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" Name="OutputIdTextBox" Margin="5" Height="30" MaxWidth="500"
+        <TextBox Grid.Column="1" Grid.Row="2" VerticalAlignment="Top" Name="OutputIdTextBox" Margin="5" Height="30" MaxWidth="500"
                  VerticalContentAlignment="Center">
             <TextBox.InputBindings>
                 <KeyBinding Key="Enter" Command="{Binding AddOutputCommand}" 
                             CommandParameter="{Binding ElementName=OutputIdTextBox, Path=Text}"/>
             </TextBox.InputBindings>
         </TextBox>
-        <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+        <TextBlock Grid.Column="1" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                    Text="ОТГРУЗКА"/>
-        <DataGrid ItemsSource="{Binding OutputProducts}" Grid.Column="1" Grid.Row="3" Margin="10" AutoGenerateColumns="False">
+        <DataGrid ItemsSource="{Binding OutputProducts}" Grid.Column="1" Grid.Row="4" Margin="10" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" IsReadOnly="True" Width="2*"/>
                 <DataGridTextColumn Header="Количество" Binding="{Binding Count}" IsReadOnly="True" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="4" Margin="10" Content="Очистить"
+        <!-- Очистка -->
+        <Button Grid.Row="5" Margin="10" Content="Очистить"
                 Command="{Binding CleanUpCommand}"/>
     </Grid>
 </Window>

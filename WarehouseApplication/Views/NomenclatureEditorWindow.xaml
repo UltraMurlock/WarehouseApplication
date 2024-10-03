@@ -23,10 +23,10 @@
         </Grid.RowDefinitions>
         
         <!-- Таблица номенкулатуры -->
-        <DataGrid Grid.Column="0" Grid.RowSpan="6">
+        <DataGrid Grid.Column="0" Grid.RowSpan="6" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Идентификатор" Width="*"/>
-                <DataGridTextColumn Header="Наименование" Width="*"/>
+                <DataGridTextColumn Header="Идентификатор" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Наименование" IsReadOnly="True" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         

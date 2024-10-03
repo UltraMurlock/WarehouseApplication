@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using Prism.Commands;
 using Prism.Mvvm;
 using WarehouseApplication.Models;
+using WarehouseApplication.Views;
 
 namespace WarehouseApplication.ViewModels
 {
@@ -12,9 +14,12 @@ namespace WarehouseApplication.ViewModels
         public DelegateCommand<string> AddInputCommand { get; }
         public DelegateCommand<string> AddOutputCommand { get; }
         public DelegateCommand CleanUpCommand { get; }
+        public DelegateCommand OpenNomenclatureEditorCommand { get; }
 
         public ObservableCollection<ProductGroup> InputProducts => _model.InputProducts;
         public ObservableCollection<ProductGroup> OutputProducts => _model.OutputProducts;
+
+        private NomenclatureEditorWindow _nomenclatureEditorWindow;
 
         private InputOutputModel _model;
 
@@ -28,6 +33,7 @@ namespace WarehouseApplication.ViewModels
             AddInputCommand = new DelegateCommand<string>((string id) => AddInput(id));
             AddOutputCommand = new DelegateCommand<string>((string id) => AddOutput(id));
             CleanUpCommand = new DelegateCommand(_model.CleanUp);
+            OpenNomenclatureEditorCommand = new DelegateCommand(OpenNomenclatureEditor);
 
             _idRegex = new Regex(@"^([0-9]|[A-F])*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
@@ -48,6 +54,18 @@ namespace WarehouseApplication.ViewModels
                 return;
 
             _model.AddOutputProducts(ids);
+        }
+
+
+
+        private void OpenNomenclatureEditor()
+        {
+            if(_nomenclatureEditorWindow != null)
+                return;
+
+            _nomenclatureEditorWindow = new NomenclatureEditorWindow();
+            _nomenclatureEditorWindow.Closed += (object sender, EventArgs e) => _nomenclatureEditorWindow = null;
+            _nomenclatureEditorWindow.Show();
         }
 
 
