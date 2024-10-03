@@ -20,31 +20,38 @@ namespace WarehouseApplication.Models
 
         public void AddInputProducts(params string[] ids)
         {
-            AddProducts(InputProducts, ids);
+            AddProducts(InputProducts, OutputProducts, ids);
         }
 
         public void AddOutputProducts(params string[] ids)
         {
-            AddProducts(OutputProducts, ids);
+            AddProducts(OutputProducts, InputProducts, ids);
         }
 
 
 
-        private void AddProducts(ObservableCollection<ProductGroup> groupCollection, params string[] ids)
+        private void AddProducts(ObservableCollection<ProductGroup> groupToAddCollection, ObservableCollection<ProductGroup> groupToRemoveCollection, params string[] ids)
         {
             foreach(var id in ids)
             {
                 string name = $"{id.ToCharArray()[0]}";
                 Product product = new Product(id, 1);
 
-                var group = groupCollection.FirstOrDefault(g => g.Name == name);
-                if(group == null)
+                var groupToAdd = groupToAddCollection.FirstOrDefault(g => g.Name == name);
+                if(groupToAdd == null)
                 {
-                    group = new ProductGroup(name);
-                    groupCollection.Add(group);
+                    groupToAdd = new ProductGroup(name);
+                    groupToAddCollection.Add(groupToAdd);
                 }
+                groupToAdd.Add(product);
 
-                group.Add(product);
+                var groupToRemove = groupToRemoveCollection.FirstOrDefault(g => g.Name == name);
+                if(groupToRemove != null)
+                {
+                    groupToRemove.Remove(product);
+                    if(groupToRemove.Count <= 0)
+                        groupToRemoveCollection.Remove(groupToRemove);
+                }
             }
         }
     }
