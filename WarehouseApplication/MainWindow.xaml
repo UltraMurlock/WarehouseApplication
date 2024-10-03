@@ -10,16 +10,6 @@
         Height="600" Width="900"
         MinHeight="350" MinWidth="650">
 
-    <Window.Resources>
-        <Style x:Key="BaseStyle">
-            <Setter Property="ItemsControl.FontSize" Value="16"/>
-        </Style>
-        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseStyle}"/>
-        <Style TargetType="TextBox" BasedOn="{StaticResource BaseStyle}"/>
-        <Style TargetType="Button" BasedOn="{StaticResource BaseStyle}"/>
-        <Style TargetType="DataGrid" BasedOn="{StaticResource BaseStyle}"/>
-    </Window.Resources>
-
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
