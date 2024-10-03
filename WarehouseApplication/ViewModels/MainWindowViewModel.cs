@@ -61,6 +61,7 @@ namespace WarehouseApplication.ViewModels
                 return false;
             }
 
+            idText = idText.ToUpper();
             ids = idText.Split(' ');
             foreach(string id in ids)
             {
