@@ -76,8 +76,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\ProductTemplateConverter.cs" />
     <Compile Include="Models\InputOutputModel.cs" />
+    <Compile Include="Models\NomenclatureModel.cs" />
+    <Compile Include="Models\ProductTemplate.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\NomenclatureEditorViewModel.cs" />
     <Compile Include="Views\NomenclatureEditorWindow.xaml.cs">
       <DependentUpon>NomenclatureEditorWindow.xaml</DependentUpon>
     </Compile>

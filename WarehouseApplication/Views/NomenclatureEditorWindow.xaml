@@ -4,8 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarehouseApplication.Views"
+        xmlns:vm="clr-namespace:WarehouseApplication.ViewModels"
+        xmlns:converters="clr-namespace:WarehouseApplication.Converters"
         mc:Ignorable="d"
         Title="Редактор номенкулатуры" Height="450" Width="800">
+
+    <Window.DataContext>
+        <vm:NomenclatureEditorViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <converters:ProductTemplateConverter x:Key="ProductTemplateConverter"/>
+    </Window.Resources>
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -23,22 +33,30 @@
         </Grid.RowDefinitions>
         
         <!-- Таблица номенкулатуры -->
-        <DataGrid Grid.Column="0" Grid.RowSpan="6" AutoGenerateColumns="False">
+        <DataGrid ItemsSource="{Binding ProductTemplates}" Grid.Column="0" Grid.RowSpan="6" 
+                  AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Идентификатор" IsReadOnly="True" Width="*"/>
-                <DataGridTextColumn Header="Наименование" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Наименование" Binding="{Binding Name}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Идентификатор" Binding="{Binding Id}" IsReadOnly="True" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+
         <!-- Панель редактирования -->
         <TextBlock Grid.Column="1" Grid.Row="1" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                   Text="Идентификатор"/>
-        <TextBox Grid.Column="2" Grid.Row="1" Margin="5" VerticalContentAlignment="Center"/>
-        <TextBlock Grid.Column="1" Grid.Row="2" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" 
                    Text="Наименование"/>
-        <TextBox Grid.Column="2" Grid.Row="2" Margin="5" VerticalContentAlignment="Center"/>
-        <Button Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Height="30" Width="200"
-                Content="Добавить"/>
+        <TextBox Name="NameTextBox" Grid.Column="2" Grid.Row="1" Margin="5" VerticalContentAlignment="Center"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" Margin="5" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                   Text="Идентификатор"/>
+        <TextBox Name="IdTextBox" Grid.Column="2" Grid.Row="2" Margin="5" VerticalContentAlignment="Center"/>
+        <Button Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Height="30" Width="200" Content="Добавить"
+                Command="{Binding AddProductTemplateCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource ProductTemplateConverter}">
+                    <Binding ElementName="IdTextBox" Path="Text"/>
+                    <Binding ElementName="NameTextBox" Path="Text"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
         <Button Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Height="30" Width="200"
                 Content="Удалить выбранные"/>
     </Grid>
