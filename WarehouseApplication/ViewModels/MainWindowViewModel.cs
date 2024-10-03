@@ -11,6 +11,8 @@ namespace WarehouseApplication.ViewModels
     {
         public DelegateCommand<string> AddInputCommand { get; }
         public DelegateCommand<string> AddOutputCommand { get; }
+        public DelegateCommand CleanUpCommand { get; }
+
         public ObservableCollection<ProductGroup> InputProducts => _model.InputProducts;
         public ObservableCollection<ProductGroup> OutputProducts => _model.OutputProducts;
 
@@ -25,6 +27,7 @@ namespace WarehouseApplication.ViewModels
             _model = new InputOutputModel();
             AddInputCommand = new DelegateCommand<string>((string id) => AddInput(id));
             AddOutputCommand = new DelegateCommand<string>((string id) => AddOutput(id));
+            CleanUpCommand = new DelegateCommand(_model.CleanUp);
 
             _idRegex = new Regex(@"^([0-9]|[A-F])*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }

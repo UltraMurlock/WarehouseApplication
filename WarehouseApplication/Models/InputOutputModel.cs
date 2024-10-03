@@ -28,6 +28,12 @@ namespace WarehouseApplication.Models
             AddProducts(OutputProducts, InputProducts, ids);
         }
 
+        public void CleanUp()
+        {
+            InputProducts.Clear();
+            OutputProducts.Clear();
+        }
+
 
 
         private void AddProducts(ObservableCollection<ProductGroup> groupToAddCollection, ObservableCollection<ProductGroup> groupToRemoveCollection, params string[] ids)
