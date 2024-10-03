@@ -89,7 +89,7 @@ namespace WarehouseApplication.ViewModels
                     return false;
                 }
 
-                if(!_idRegex.IsMatch(id))
+                if(!IdValidator.IsValid(id))
                 {
                     MessageBox.Show($"Ошибка в идентификаторе {id}. Должны использоваться только HEX-символы (0-9 и A-F)");
                     return false;
