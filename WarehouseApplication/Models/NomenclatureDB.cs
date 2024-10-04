@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.SQLite;
 using System.IO;
 
@@ -7,6 +8,8 @@ namespace WarehouseApplication.Models
     public class NomenclatureDB : DbContext
     {
         public DbSet<ProductTemplate> Templates { get; set; }
+
+        public event Action<ProductTemplate> TemplateRemoved;
 
         private const string _path = ".\\nomenclature.sqlite";
 
@@ -30,6 +33,11 @@ namespace WarehouseApplication.Models
             }
 
             return _instance;
+        }
+
+        public void OnTemplateRemoved(ProductTemplate template)
+        {
+            TemplateRemoved?.Invoke(template);
         }
 
 

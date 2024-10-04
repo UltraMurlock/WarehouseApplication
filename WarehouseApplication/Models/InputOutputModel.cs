@@ -19,7 +19,9 @@ namespace WarehouseApplication.Models
             InputProducts = new ObservableCollection<ProductGroup>();
             OutputProducts = new ObservableCollection<ProductGroup>();
 
-            _productTemplates = NomenclatureDB.GetInstance().Templates;
+            var nomenclatureDB = NomenclatureDB.GetInstance();
+            _productTemplates = nomenclatureDB.Templates;
+            nomenclatureDB.TemplateRemoved += RemoveById;
         }
 
 
@@ -80,6 +82,22 @@ namespace WarehouseApplication.Models
             
             name = template.Name;
             return true;
+        }
+
+        private void RemoveById(ProductTemplate template)
+        {
+            for (int i = InputProducts.Count - 1; i >= 0; i--)
+            {
+                InputProducts[i].RemoveById(template.Id);
+                if(InputProducts[i].Count <= 0)
+                    InputProducts.Remove(InputProducts[i]);
+            }
+            for(int i = OutputProducts.Count - 1; i >= 0; i--)
+            {
+                OutputProducts[i].RemoveById(template.Id);
+                if(OutputProducts[i].Count <= 0)
+                    OutputProducts.Remove(OutputProducts[i]);
+            }
         }
     }
 }

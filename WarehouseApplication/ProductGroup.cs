@@ -46,6 +46,16 @@ namespace WarehouseApplication
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
         }
 
+        public void RemoveById(string id)
+        {
+            var existProduct = _products.FirstOrDefault(x => x.Id == id);
+            if(existProduct != null)
+            {
+                _products.Remove(existProduct);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
+            }
+        }
+
         public int GetCount()
         {
             int count = 0;

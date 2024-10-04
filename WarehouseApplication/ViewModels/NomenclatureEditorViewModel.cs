@@ -10,6 +10,7 @@ namespace WarehouseApplication.ViewModels
     internal class NomenclatureEditorViewModel : BindableBase
     {
         public DelegateCommand<ProductTemplate> AddProductTemplateCommand { get; }
+        public DelegateCommand<string> RemoveProductTemplateCommand { get; }
 
         public DbSet<ProductTemplate> ProductTemplates => _model.ProductTemplates;
 
@@ -21,11 +22,12 @@ namespace WarehouseApplication.ViewModels
         {
             _model = new NomenclatureModel();
             AddProductTemplateCommand = new DelegateCommand<ProductTemplate>((t) => AddProductTemplate(t));
+            RemoveProductTemplateCommand = new DelegateCommand<string>((id) => RemoveProductTemplate(id));
         }
 
 
 
-        public void AddProductTemplate(ProductTemplate template)
+        private void AddProductTemplate(ProductTemplate template)
         {
             if(string.IsNullOrEmpty(template.Name))
             {
@@ -60,6 +62,14 @@ namespace WarehouseApplication.ViewModels
             }
 
             _model.AddProductTemplate(template);
+        }
+
+        private void RemoveProductTemplate(string id)
+        {
+            if(string.IsNullOrEmpty(id))
+                return;
+
+            _model.RemoveProductTemplate(id);
         }
     }
 }

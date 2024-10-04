@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 
 namespace WarehouseApplication.Models
 {
@@ -24,10 +25,16 @@ namespace WarehouseApplication.Models
             _nomenclatureDB.SaveChanges();
         }
 
-        public void RemoveProductTemplate(ProductTemplate template)
+        public void RemoveProductTemplate(string id)
         {
-            ProductTemplates.Remove(template);
-            _nomenclatureDB.SaveChanges();
+            var template = ProductTemplates.FirstOrDefault(t => t.Id == id);
+            if(template != null)
+            {
+                ProductTemplates.Remove(template);
+                _nomenclatureDB.SaveChanges();
+
+                _nomenclatureDB.OnTemplateRemoved(template);
+            }
         }
     }
 }
