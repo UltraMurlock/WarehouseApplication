@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace WarehouseApplication.Models
 {
@@ -8,12 +10,16 @@ namespace WarehouseApplication.Models
         public ObservableCollection<ProductGroup> InputProducts;
         public ObservableCollection<ProductGroup> OutputProducts;
 
+        private DbSet<ProductTemplate> _productTemplates;
+
 
 
         public InputOutputModel()
         {
             InputProducts = new ObservableCollection<ProductGroup>();
             OutputProducts = new ObservableCollection<ProductGroup>();
+
+            _productTemplates = NomenclatureDB.GetInstance().Templates;
         }
 
 
@@ -40,7 +46,9 @@ namespace WarehouseApplication.Models
         {
             foreach(var id in ids)
             {
-                string name = $"{id.ToCharArray()[0]}";
+                if(!TryGetProductName(id, out var name))
+                    continue;
+
                 Product product = new Product(id, 1);
 
                 var groupToAdd = groupToAddCollection.FirstOrDefault(g => g.Name == name);
@@ -59,6 +67,19 @@ namespace WarehouseApplication.Models
                         groupToRemoveCollection.Remove(groupToRemove);
                 }
             }
+        }
+
+        private bool TryGetProductName(string id, out string name)
+        {
+            ProductTemplate template = _productTemplates.FirstOrDefault(g => g.Id == id);
+            if(template == null)
+            {
+                name = string.Empty;
+                return false;
+            }
+            
+            name = template.Name;
+            return true;
         }
     }
 }
