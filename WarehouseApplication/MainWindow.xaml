@@ -74,7 +74,7 @@
         </DataGrid>
 
         <!-- Очистка -->
-        <Button Grid.Row="5" Margin="10" Content="Очистить"
+        <Button Grid.Row="5" Grid.ColumnSpan="2" MaxWidth="400" Margin="10" Content="Очистить"
                 Command="{Binding CleanUpCommand}"/>
     </Grid>
 </Window>
